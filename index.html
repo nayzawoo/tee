@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tick</title>
+  </head>
+  <body>
+    <h1>World Hello!</h1>
+    <label for="interval">interval(second)</label>
+    <input type="number" id="interval" value="1" />
+    <audio src="440.mp3" id="myAudio"></audio>
+    <button onclick="onclickstart()">Start</button>
+  </body>
+  <script>
+    var interacted = false;
+    function onclickstart() {
+      interacted = true;
+    }
+    function getInterval() {
+      var interval = parseInt(document.getElementById("interval").value) * 1000;
+      return interval < 500 ? 500 : interval;
+    }
+
+    var x = document.getElementById("myAudio");
+
+    function playAudio() {
+      if (!interacted) {
+        return;
+      }
+
+      x.play();
+    }
+
+    function pauseAudio() {
+      x.pause();
+    }
+
+    var loopFunction = function () {
+      console.log("loop");
+      playAudio();
+      setTimeout(loopFunction, getInterval());
+    };
+
+    setTimeout(loopFunction, getInterval());
+  </script>
+</html>
